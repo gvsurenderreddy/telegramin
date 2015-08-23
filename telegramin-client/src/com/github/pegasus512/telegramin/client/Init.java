@@ -101,7 +101,6 @@ public class Init extends JFrame {
 			/** Tenta abrir o programa */
 			try {
 				Main main = new Main(txtSeuNickEx.getText(), txtIp.getText(), Integer.parseInt(txtPorta.getText()));
-				this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 			} catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, "Vish, deu erro D:");
 			}

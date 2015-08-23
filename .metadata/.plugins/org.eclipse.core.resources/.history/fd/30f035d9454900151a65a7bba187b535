@@ -1,0 +1,5 @@
+package com.github.pegasus512.telegramin.server;
+
+public class SerialDealer {
+
+}

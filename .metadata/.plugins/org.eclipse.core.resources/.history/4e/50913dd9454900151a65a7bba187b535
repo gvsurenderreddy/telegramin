@@ -1,0 +1,18 @@
+package com.github.pegasus512.telegramin.server;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class SerialDealer {
+	
+	Path directory = Paths.get(System.getProperty("user.home"), "telegramin");
+	Path file = Paths.get(System.getProperty("user.home"), "telegramin", "")
+	
+	public void cria() {
+		FileOutputStream fos = new FileOutputStream("/home/dimitri/Documentos/xti/serialtest.peg");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(conta1);
+		oos.writeObject(conta2);
+		oos.close();
+	}
+}

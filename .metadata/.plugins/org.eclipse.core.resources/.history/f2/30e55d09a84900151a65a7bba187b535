@@ -1,0 +1,89 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.github.pegasus512.telegramin.server.gui;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
+
+
+@SuppressWarnings({ "serial" })
+public class Main extends JFrame {
+    ServerSocket server;
+    Scanner leitor;
+    List<PrintWriter> escritores = new ArrayList<>();
+    JTextArea console;
+    ImageIcon icone = new ImageIcon(getClass().getResource("files/icon.png"));
+    public Main(int port)  {
+       super("Telegramin - Server - GUI ");
+       setVisible(true);
+       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       console = new JTextArea();
+       console.setForeground(Color.WHITE);
+       console.setBackground(Color.BLACK);
+       console.setFont(new Font("Arial", Font.BOLD, 15));
+       getContentPane().add(BorderLayout.CENTER, console);
+        try {
+            server = new ServerSocket(port);
+            while(true) {
+                Socket socket = server.accept();
+                new Thread(new EscutaClient(socket)).start();
+               PrintWriter p = new PrintWriter(socket.getOutputStream());
+               escritores.add(p); 
+            }
+            } catch (IOException ex) {
+            
+        }             
+     }
+    
+    
+    
+    private class EscutaClient implements Runnable {
+
+        public EscutaClient(Socket socket) throws IOException {
+         leitor = new Scanner(socket.getInputStream());
+        }
+        
+        @Override
+        public void run()  {
+            String texto;
+         // try{
+         
+            while((texto = leitor.nextLine()) != null) {
+                console.append("[telegramin-server@telegramin] " + texto + "\n");
+                encaminharParaTodos(texto);
+          //  } 
+        //  } catch (Exception e){
+            //  e.printStackTrace();
+          }
+        }
+        
+    }
+    
+    private void encaminharParaTodos(String texto) {
+        for (PrintWriter w : escritores) {
+              w.println(texto);
+              w.flush();
+        }    
+    } public static void main(String[] args) {
+    	System.out.println("Digite a porta do servidor! Ex: 8436");
+    	@SuppressWarnings("resource")
+		Scanner s = new Scanner(System.in);
+    	int port = s.nextInt();
+    	new Main(port);
+    }
+}
