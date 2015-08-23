@@ -1,0 +1,92 @@
+package com.github.pegasus512.telegramin.client;
+
+import java.awt.EventQueue;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.EmptyBorder;
+
+import net.miginfocom.swing.MigLayout;
+
+@SuppressWarnings("serial")
+public class Init extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField txtIp;
+	private JTextField txtPorta;
+	private JButton btnEntrar;
+	private JTextField txtSeuNickEx;
+
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Init frame = new Init();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	@SuppressWarnings("unused")
+	public Init() {
+		// Verifica se o LookAndFell Nimbus estiver instalado e o define para a aplicação, 
+		// Se Nimbus não estiver instalado o programa automaticamente seta para o padrão do sistema.
+		try {
+        	for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+        if ("Nimbus".equals(info.getName())) {
+            UIManager.setLookAndFeel(info.getClassName());
+            break;
+        }
+        	}
+        } catch (Exception e) {
+        	  try {
+				UIManager.setLookAndFeel(
+				  UIManager.getSystemLookAndFeelClassName());
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+					| UnsupportedLookAndFeelException e1) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, "Vish, deu erro D:");
+			}
+        }
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 404, 188);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new MigLayout("", "[grow]", "[][][][]"));
+		
+		txtIp = new JTextField();
+		txtIp.setText("IP do servidor. Ex: 192.168.25.213");
+		contentPane.add(txtIp, "cell 0 0,growx");
+		txtIp.setColumns(10);
+		
+		txtPorta = new JTextField();
+		txtPorta.setText("Porta do servidor. Ex: 8467");
+		contentPane.add(txtPorta, "cell 0 1,growx");
+		txtPorta.setColumns(10);
+		
+		txtSeuNickEx = new JTextField();
+		txtSeuNickEx.setText("Seu nick. Ex: Luigi6543");
+		contentPane.add(txtSeuNickEx, "cell 0 2,growx");
+		txtSeuNickEx.setColumns(10);
+		
+		btnEntrar = new JButton("Entrar");
+		contentPane.add(btnEntrar, "flowx,cell 0 3");
+		btnEntrar.addActionListener(e -> {
+			try {
+				Main main = new Main(txtSeuNickEx.getText(), txtIp.getText(), Integer.parseInt(txtPorta.getText()));
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "Vish, deu erro D:");
+			}
+		});
+	}
+
+}

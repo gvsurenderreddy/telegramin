@@ -1,0 +1,60 @@
+package com.github.pegasus512.telegramin.client;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import net.miginfocom.swing.MigLayout;
+import javax.swing.JEditorPane;
+import javax.swing.JTextField;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import java.awt.CardLayout;
+import javax.swing.JToggleButton;
+import javax.swing.JTextPane;
+
+public class Main extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField textField;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Main frame = new Main();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Main() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new CardLayout(0, 0));
+		
+		JTextPane textPane = new JTextPane();
+		contentPane.add(textPane, "name_2011301028493");
+		
+		JToggleButton tglbtnNewToggleButton = new JToggleButton("New toggle button");
+		contentPane.add(tglbtnNewToggleButton, "name_2008973161576");
+		
+		textField = new JTextField();
+		contentPane.add(textField, "name_2005530617300");
+		textField.setColumns(10);
+	}
+}

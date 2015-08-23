@@ -1,0 +1,75 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.github.pegasus512.telegramin.server;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+
+public class Main{
+    ServerSocket server;
+    Scanner leitor;
+    List<PrintWriter> escritores = new ArrayList<>();
+    public Main(int port)  {
+       
+        try {
+            server = new ServerSocket(port);
+            while(true) {
+                Socket socket = server.accept();         
+                new Thread(new EscutaClient(socket)).start();
+               PrintWriter p = new PrintWriter(socket.getOutputStream());
+               escritores.add(p); 
+            }
+            } catch (IOException ex) {
+            
+        }
+        
+           
+            
+        }
+    
+    
+    
+    private class EscutaClient implements Runnable {
+
+        public EscutaClient(Socket socket) throws IOException {
+         leitor = new Scanner(socket.getInputStream());
+        }
+        
+        @Override
+        public void run()  {
+            String texto;
+         // try{
+         
+            while((texto = leitor.nextLine()) != null) {
+                System.out.println(texto);
+                encaminharParaTodos(texto);
+          //  } 
+        //  } catch (Exception e){
+            //  e.printStackTrace();
+          }
+        }
+        
+    }
+    
+    private void encaminharParaTodos(String texto) {
+        for (PrintWriter w : escritores) {
+              w.println(texto);
+              w.flush();
+            
+         
+    //    } catch (Exception e) {
+         //   e.printStackTrace();
+      //  }
+        }
+        
+    }
+}

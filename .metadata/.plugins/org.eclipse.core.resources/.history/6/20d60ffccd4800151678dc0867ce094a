@@ -1,0 +1,56 @@
+package com.github.pegasus512.telegramin.client;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import net.miginfocom.swing.MigLayout;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JButton;
+
+public class Init extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Init frame = new Init();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Init() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new MigLayout("", "[][][][][][]", "[][][][][][][][][]"));
+		
+		JLabel lblBemVindoAo = new JLabel("Bem vindo ao Telegramin!");
+		lblBemVindoAo.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		contentPane.add(lblBemVindoAo, "cell 3 0");
+		
+		JButton btnNewButton = new JButton("Configurações");
+		contentPane.add(btnNewButton, "cell 4 8");
+		
+		JButton btnEntr = new JButton("Entrar");
+		contentPane.add(btnEntr, "cell 5 8");
+	}
+
+}

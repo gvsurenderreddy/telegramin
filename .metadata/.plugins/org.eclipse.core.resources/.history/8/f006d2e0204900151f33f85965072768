@@ -1,0 +1,76 @@
+package com.github.pegasus512.telegramin.server;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import net.miginfocom.swing.MigLayout;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.JButton;
+
+@SuppressWarnings("serial")
+public class Init extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField txtPortaDoServidor;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Init frame = new Init();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Init() {
+		try {
+        	for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+        if ("Nimbus".equals(info.getName())) {
+            UIManager.setLookAndFeel(info.getClassName());
+            break;
+        }
+        	}
+        } catch (Exception e) {
+        	  try {
+				UIManager.setLookAndFeel(
+				  UIManager.getSystemLookAndFeelClassName());
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+					| UnsupportedLookAndFeelException e1) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, "Vish, deu erro D:");
+			}
+        }
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 447, 122);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new MigLayout("", "[grow]", "[][][]"));
+		
+		txtPortaDoServidor = new JTextField();
+		txtPortaDoServidor.setText("Porta do servidor. Ex: 8445");
+		contentPane.add(txtPortaDoServidor, "cell 0 0,growx");
+		txtPortaDoServidor.setColumns(10);
+		
+		JButton btnIniciar = new JButton("Iniciar");
+		contentPane.add(btnIniciar, "cell 0 2");
+	}
+
+}
